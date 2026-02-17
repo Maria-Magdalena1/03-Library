@@ -1,0 +1,28 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        cache: 'npm'
+    - name: Install Node modules
+      run: npm install
+    - name: Start the BackEnd
+      run: npm run server
+    - name: Start the Front-end
+      run: npm run start
+    - name: Run Playwright UI tests
+      run: npm run test
